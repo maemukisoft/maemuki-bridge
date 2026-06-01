@@ -29,15 +29,15 @@
     font-family:var(--font-mono); font-size:11px; letter-spacing:.08em;
   }
   .lang-btn {
-    display:inline-flex; align-items:center; gap:.4rem;
+    display:inline-flex; align-items:center; gap:.5rem;
     background:transparent; border:1px solid var(--border2);
-    border-radius:5px; padding:.25rem .7rem;
+    border-radius:6px; padding:.35rem .85rem;
     color:var(--muted); cursor:pointer; font-family:var(--font-mono);
     font-size:11px; letter-spacing:.08em; transition:.15s;
   }
   .lang-btn.active { background:var(--surface2); border-color:var(--muted); color:var(--text); }
   .lang-btn:hover:not(.active) { border-color:var(--dim); color:var(--text); }
-  .lang-flag { font-size:14px; }
+  .lang-flag { font-size:18px; line-height:1; }
 
   /* ── NAV ── */
   nav {
@@ -234,8 +234,23 @@
 
 <!-- LANG BAR -->
 <div class="lang-bar">
-  <button class="lang-btn active" id="btn-en" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span> EN</button>
-  <button class="lang-btn"        id="btn-es" onclick="setLang('es')"><span class="lang-flag">🇪🇸</span> ES</button>
+  <button class="lang-btn active" id="btn-en" onclick="setLang('en')">
+    <svg width="20" height="14" viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" style="border-radius:2px;flex-shrink:0">
+      <rect width="60" height="40" fill="#012169"/>
+      <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+      <path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="5"/>
+      <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="13"/>
+      <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="8"/>
+    </svg>
+    EN
+  </button>
+  <button class="lang-btn" id="btn-es" onclick="setLang('es')">
+    <svg width="20" height="14" viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" style="border-radius:2px;flex-shrink:0">
+      <rect width="60" height="40" fill="#c60b1e"/>
+      <rect y="10" width="60" height="20" fill="#ffc400"/>
+    </svg>
+    ES
+  </button>
 </div>
 
 <!-- NAV -->
