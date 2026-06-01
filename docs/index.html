@@ -10,374 +10,269 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg:        #0f0f0f;
-    --surface:   #181818;
-    --surface2:  #222222;
-    --border:    #2e2e2e;
-    --border2:   #3a3a3a;
-    --text:      #f0ede8;
-    --muted:     #888;
-    --dim:       #555;
-    --accent:    #c8f060;   /* electric lime */
-    --accent2:   #60c8f0;   /* sky blue */
-    --danger:    #f06060;
-    --font-disp: 'Syne', sans-serif;
-    --font-body: 'DM Sans', sans-serif;
-    --font-mono: 'DM Mono', monospace;
+    --bg:#0f0f0f; --surface:#181818; --surface2:#222222;
+    --border:#2e2e2e; --border2:#3a3a3a;
+    --text:#f0ede8; --muted:#888; --dim:#555;
+    --accent:#c8f060; --accent2:#60c8f0; --danger:#f06060;
+    --font-disp:'Syne',sans-serif; --font-body:'DM Sans',sans-serif; --font-mono:'DM Mono',monospace;
   }
-
   html { scroll-behavior: smooth; }
+  body { background:var(--bg); color:var(--text); font-family:var(--font-body); font-weight:300; line-height:1.6; overflow-x:hidden; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    font-weight: 300;
-    line-height: 1.6;
-    overflow-x: hidden;
+  /* ── LANG SWITCHER ── */
+  .lang-bar {
+    position:fixed; top:0; left:0; right:0; z-index:200;
+    display:flex; justify-content:flex-end; align-items:center; gap:.5rem;
+    padding:.4rem 2.5rem;
+    background:#0a0a0a; border-bottom:1px solid #1a1a1a;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.08em;
   }
+  .lang-btn {
+    display:inline-flex; align-items:center; gap:.4rem;
+    background:transparent; border:1px solid var(--border2);
+    border-radius:5px; padding:.25rem .7rem;
+    color:var(--muted); cursor:pointer; font-family:var(--font-mono);
+    font-size:11px; letter-spacing:.08em; transition:.15s;
+  }
+  .lang-btn.active { background:var(--surface2); border-color:var(--muted); color:var(--text); }
+  .lang-btn:hover:not(.active) { border-color:var(--dim); color:var(--text); }
+  .lang-flag { font-size:14px; }
 
   /* ── NAV ── */
   nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.1rem 2.5rem;
-    background: rgba(15,15,15,.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
+    position:fixed; top:29px; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.1rem 2.5rem;
+    background:rgba(15,15,15,.85); backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
   }
-  .nav-logo { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
-  .nav-logo img { height: 30px; width: auto; }
+  .nav-logo { display:flex; align-items:center; gap:.6rem; text-decoration:none; }
+  .nav-logo img { height:30px; width:auto; }
   .nav-pill {
-    font-family: var(--font-body); font-size: 13px; font-weight: 500;
-    background: var(--accent); color: #0f0f0f;
-    border: none; border-radius: 999px; padding: .5rem 1.25rem;
-    cursor: pointer; text-decoration: none;
-    transition: opacity .15s, transform .15s;
+    font-family:var(--font-body); font-size:13px; font-weight:500;
+    background:var(--accent); color:#0f0f0f;
+    border:none; border-radius:999px; padding:.5rem 1.25rem;
+    cursor:pointer; text-decoration:none; transition:opacity .15s,transform .15s;
   }
-  .nav-pill:hover { opacity: .85; transform: translateY(-1px); }
+  .nav-pill:hover { opacity:.85; transform:translateY(-1px); }
 
   /* ── HERO ── */
   .hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 7rem 2.5rem 5rem;
-    position: relative; overflow: hidden;
+    min-height:100vh; display:flex; flex-direction:column; justify-content:center;
+    padding:9rem 2.5rem 5rem; position:relative; overflow:hidden;
   }
-  /* grid lines background */
   .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(var(--border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 100%);
-    opacity: .4;
+    content:''; position:absolute; inset:0;
+    background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+    background-size:60px 60px;
+    mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,black 30%,transparent 100%);
+    opacity:.4;
   }
-  /* glow blobs */
   .hero::after {
-    content: '';
-    position: absolute; inset: 0; pointer-events: none;
-    background:
-      radial-gradient(ellipse 50% 40% at 20% 50%, rgba(200,240,96,.08), transparent),
-      radial-gradient(ellipse 40% 35% at 80% 30%, rgba(96,200,240,.07), transparent);
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(ellipse 50% 40% at 20% 50%,rgba(200,240,96,.08),transparent),
+               radial-gradient(ellipse 40% 35% at 80% 30%,rgba(96,200,240,.07),transparent);
   }
-  .hero-inner { position: relative; max-width: 860px; margin: 0 auto; width: 100%; }
+  .hero-inner { position:relative; max-width:860px; margin:0 auto; width:100%; }
   .hero-tag {
-    display: inline-flex; align-items: center; gap: .5rem;
-    font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--accent); background: rgba(200,240,96,.08);
-    border: 1px solid rgba(200,240,96,.25); border-radius: 999px;
-    padding: .35rem .9rem; margin-bottom: 2rem;
+    display:inline-flex; align-items:center; gap:.5rem;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--accent); background:rgba(200,240,96,.08);
+    border:1px solid rgba(200,240,96,.25); border-radius:999px;
+    padding:.35rem .9rem; margin-bottom:2rem;
   }
-  .hero-tag::before { content: '●'; font-size: 8px; animation: pulse 2s infinite; }
+  .hero-tag::before { content:'●'; font-size:8px; animation:pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
-
-  h1 {
-    font-family: var(--font-disp); font-size: clamp(2.8rem, 7vw, 6rem);
-    font-weight: 800; line-height: 1.0; letter-spacing: -.02em;
-    color: var(--text); margin-bottom: 1.5rem;
-  }
-  h1 em { font-style: normal; color: var(--accent); }
-
-  .hero-sub {
-    font-size: clamp(1rem, 2vw, 1.2rem); color: var(--muted);
-    max-width: 520px; margin-bottom: 2.5rem; font-weight: 400;
-  }
-
-  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: .5rem;
-    background: var(--accent); color: #0f0f0f;
-    font-family: var(--font-body); font-size: 14px; font-weight: 600;
-    padding: .8rem 1.75rem; border-radius: 8px; text-decoration: none;
-    transition: opacity .15s, transform .15s;
-  }
-  .btn-primary:hover { opacity: .88; transform: translateY(-2px); }
-  .btn-ghost {
-    display: inline-flex; align-items: center; gap: .5rem;
-    background: transparent; color: var(--text);
-    font-family: var(--font-body); font-size: 14px; font-weight: 500;
-    padding: .8rem 1.75rem; border-radius: 8px; text-decoration: none;
-    border: 1px solid var(--border2);
-    transition: border-color .15s, transform .15s;
-  }
-  .btn-ghost:hover { border-color: var(--muted); transform: translateY(-2px); }
+  h1 { font-family:var(--font-disp); font-size:clamp(2.8rem,7vw,6rem); font-weight:800; line-height:1.0; letter-spacing:-.02em; color:var(--text); margin-bottom:1.5rem; }
+  h1 em { font-style:normal; color:var(--accent); }
+  .hero-sub { font-size:clamp(1rem,2vw,1.2rem); color:var(--muted); max-width:520px; margin-bottom:2.5rem; font-weight:400; }
+  .hero-ctas { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:4rem; }
+  .btn-primary { display:inline-flex; align-items:center; gap:.5rem; background:var(--accent); color:#0f0f0f; font-family:var(--font-body); font-size:14px; font-weight:600; padding:.8rem 1.75rem; border-radius:8px; text-decoration:none; transition:opacity .15s,transform .15s; }
+  .btn-primary:hover { opacity:.88; transform:translateY(-2px); }
+  .btn-ghost { display:inline-flex; align-items:center; gap:.5rem; background:transparent; color:var(--text); font-family:var(--font-body); font-size:14px; font-weight:500; padding:.8rem 1.75rem; border-radius:8px; text-decoration:none; border:1px solid var(--border2); transition:border-color .15s,transform .15s; }
+  .btn-ghost:hover { border-color:var(--muted); transform:translateY(-2px); }
 
   /* diagram */
-  .hero-diagram {
-    display: flex; align-items: center; gap: 0; flex-wrap: wrap;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 1.5rem 2rem;
-    max-width: 640px;
-  }
-  .diag-node {
-    flex: 1; min-width: 120px;
-    display: flex; flex-direction: column; align-items: center; gap: .5rem;
-    padding: .75rem 1rem;
-  }
-  .diag-icon {
-    width: 44px; height: 44px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-  }
-  .diag-icon.plc   { background: rgba(200,240,96,.12); border: 1px solid rgba(200,240,96,.3); }
-  .diag-icon.laptop{ background: rgba(96,200,240,.12); border: 1px solid rgba(96,200,240,.3); }
-  .diag-icon.office{ background: rgba(240,96,96,.12);  border: 1px solid rgba(240,96,96,.3); }
-  .diag-label { font-family: var(--font-mono); font-size: 10px; color: var(--muted); text-align: center; letter-spacing: .08em; text-transform: uppercase; }
-  .diag-sub   { font-size: 11px; color: var(--dim); text-align: center; }
-  .diag-arrow {
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    padding: 0 .25rem;
-  }
-  .diag-line {
-    width: 48px; height: 1px; background: linear-gradient(90deg, var(--border2), var(--accent2));
-    position: relative;
-  }
-  .diag-line::before {
-    content: '◀'; font-size: 8px; color: var(--accent2);
-    position: absolute; left: -4px; top: -5px;
-  }
-  .diag-line::after {
-    content: '▶'; font-size: 8px; color: var(--accent2);
-    position: absolute; right: -4px; top: -5px;
-  }
-  .diag-proto { font-family: var(--font-mono); font-size: 9px; color: var(--accent); letter-spacing: .06em; }
+  .hero-diagram { display:flex; align-items:center; gap:0; flex-wrap:wrap; background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:1.5rem 2rem; max-width:640px; }
+  .diag-node { flex:1; min-width:120px; display:flex; flex-direction:column; align-items:center; gap:.5rem; padding:.75rem 1rem; }
+  .diag-icon { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; }
+  .diag-icon.plc    { background:rgba(200,240,96,.12); border:1px solid rgba(200,240,96,.3); }
+  .diag-icon.laptop { background:rgba(96,200,240,.12); border:1px solid rgba(96,200,240,.3); }
+  .diag-icon.office { background:rgba(240,96,96,.12);  border:1px solid rgba(240,96,96,.3); }
+  .diag-label { font-family:var(--font-mono); font-size:10px; color:var(--muted); text-align:center; letter-spacing:.08em; text-transform:uppercase; }
+  .diag-sub   { font-size:11px; color:var(--dim); text-align:center; }
+  .diag-arrow { display:flex; flex-direction:column; align-items:center; gap:4px; padding:0 .25rem; }
+  .diag-line  { width:48px; height:1px; background:linear-gradient(90deg,var(--border2),var(--accent2)); position:relative; }
+  .diag-line::before { content:'◀'; font-size:8px; color:var(--accent2); position:absolute; left:-4px; top:-5px; }
+  .diag-line::after  { content:'▶'; font-size:8px; color:var(--accent2); position:absolute; right:-4px; top:-5px; }
+  .diag-proto { font-family:var(--font-mono); font-size:9px; color:var(--accent); letter-spacing:.06em; }
 
-  /* ── SECTION WRAPPER ── */
-  section { padding: 5rem 2.5rem; }
-  .section-inner { max-width: 1000px; margin: 0 auto; }
-  .section-label {
-    font-family: var(--font-mono); font-size: 10px; letter-spacing: .15em;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 1rem;
-  }
-  h2 {
-    font-family: var(--font-disp); font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 700; letter-spacing: -.02em; margin-bottom: 1rem;
-  }
-  .section-intro { color: var(--muted); font-size: 1.05rem; max-width: 560px; margin-bottom: 3rem; }
+  /* ── SECTIONS ── */
+  section { padding:5rem 2.5rem; }
+  .section-inner { max-width:1000px; margin:0 auto; }
+  .section-label { font-family:var(--font-mono); font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; }
+  h2 { font-family:var(--font-disp); font-size:clamp(1.8rem,4vw,2.8rem); font-weight:700; letter-spacing:-.02em; margin-bottom:1rem; }
+  .section-intro { color:var(--muted); font-size:1.05rem; max-width:560px; margin-bottom:3rem; }
 
   /* ── HOW IT WORKS ── */
-  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
-  .step {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 14px; padding: 1.75rem;
-    position: relative; overflow: hidden;
-    transition: border-color .2s, transform .2s;
-  }
-  .step:hover { border-color: var(--border2); transform: translateY(-3px); }
-  .step-num {
-    font-family: var(--font-disp); font-size: 3.5rem; font-weight: 800;
-    color: var(--surface2); line-height: 1; position: absolute; top: 1rem; right: 1.25rem;
-    user-select: none;
-  }
-  .step-icon { font-size: 1.5rem; margin-bottom: .75rem; }
-  .step h3 { font-family: var(--font-disp); font-size: 1rem; font-weight: 700; margin-bottom: .5rem; }
-  .step p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  .steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.5rem; }
+  .step { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1.75rem; position:relative; overflow:hidden; transition:border-color .2s,transform .2s; }
+  .step:hover { border-color:var(--border2); transform:translateY(-3px); }
+  .step-num { font-family:var(--font-disp); font-size:3.5rem; font-weight:800; color:var(--surface2); line-height:1; position:absolute; top:1rem; right:1.25rem; user-select:none; }
+  .step-icon { font-size:1.5rem; margin-bottom:.75rem; }
+  .step h3 { font-family:var(--font-disp); font-size:1rem; font-weight:700; margin-bottom:.5rem; }
+  .step p { font-size:13px; color:var(--muted); line-height:1.65; }
 
   /* ── BENEFITS ── */
-  .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
-  .benefit {
-    display: flex; gap: 1rem; align-items: flex-start;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; padding: 1.25rem 1.5rem;
-  }
-  .benefit-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--accent); flex-shrink: 0; margin-top: .45rem;
-  }
-  .benefit h4 { font-family: var(--font-disp); font-size: .95rem; font-weight: 700; margin-bottom: .25rem; }
-  .benefit p { font-size: 13px; color: var(--muted); }
+  .benefits-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
+  .benefit { display:flex; gap:1rem; align-items:flex-start; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.25rem 1.5rem; }
+  .benefit-dot { width:8px; height:8px; border-radius:50%; background:var(--accent); flex-shrink:0; margin-top:.45rem; }
+  .benefit h4 { font-family:var(--font-disp); font-size:.95rem; font-weight:700; margin-bottom:.25rem; }
+  .benefit p  { font-size:13px; color:var(--muted); }
+
+  /* ── TAILSCALE ── */
+  .ts-steps { display:flex; flex-direction:column; gap:0; }
+  .ts-step { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1.75rem; transition:border-color .2s; }
+  .ts-step:hover { border-color:var(--border2); }
+  .ts-step-head { display:flex; gap:1.25rem; align-items:flex-start; margin-bottom:1rem; }
+  .ts-num { font-family:var(--font-mono); font-size:11px; font-weight:500; color:var(--accent); background:rgba(200,240,96,.08); border:1px solid rgba(200,240,96,.2); border-radius:6px; padding:.3rem .6rem; flex-shrink:0; margin-top:.15rem; }
+  .ts-step h3 { font-family:var(--font-disp); font-size:1rem; font-weight:700; margin-bottom:.4rem; }
+  .ts-step p  { font-size:13px; color:var(--muted); line-height:1.65; }
+  .ts-step a  { color:var(--accent2); text-decoration:none; }
+  .ts-step a:hover { text-decoration:underline; }
+  .ts-step strong { color:var(--text); font-weight:600; }
+  .ts-cmd { font-family:var(--font-mono); font-size:13px; color:#d4a84b; background:#111; border:1px solid var(--border2); border-left:3px solid var(--accent); border-radius:6px; padding:.6rem 1rem; margin-bottom:.5rem; }
+  .ts-cmd::before { content:'$ '; color:var(--dim); }
+  .ts-cmd-note { font-size:12px; color:var(--dim); font-style:italic; }
+  .ts-note { display:flex; align-items:flex-start; gap:.75rem; background:rgba(96,200,240,.06); border:1px solid rgba(96,200,240,.15); border-radius:8px; padding:.75rem 1rem; font-size:13px; color:var(--muted); line-height:1.6; }
+  .ts-note-icon { color:var(--accent2); font-size:16px; flex-shrink:0; margin-top:.05rem; }
+  .ts-connector { width:2px; height:32px; background:var(--border); margin:0 0 0 calc(1.75rem + 2.2rem); position:relative; }
+  .ts-connector::after { content:'▼'; font-size:8px; color:var(--dim); position:absolute; bottom:-6px; left:-4px; }
+  .ts-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-top:2rem; padding:1rem 1.5rem; background:var(--surface); border:1px solid var(--border); border-radius:10px; font-size:13px; }
+  .ts-footer span { color:var(--muted); }
+  .ts-footer a { color:var(--accent2); text-decoration:none; font-weight:500; }
+  .ts-footer a:hover { text-decoration:underline; }
 
   /* ── PRICING ── */
-  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; align-items: start; }
-  .plan {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 2rem; position: relative;
-    transition: border-color .2s, transform .2s;
-  }
-  .plan:hover { transform: translateY(-4px); border-color: var(--border2); }
-  .plan.featured {
-    border-color: var(--accent); background: #161a0e;
-  }
-  .plan-badge {
-    position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
-    background: var(--accent); color: #0f0f0f;
-    font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
-    padding: .25rem .85rem; border-radius: 999px;
-  }
-  .plan-name { font-family: var(--font-disp); font-size: 1.3rem; font-weight: 800; margin-bottom: .25rem; }
-  .plan-price { margin: 1rem 0; }
-  .plan-price .amount { font-family: var(--font-disp); font-size: 2.4rem; font-weight: 800; }
-  .plan-price .period { font-size: 13px; color: var(--muted); margin-left: .25rem; }
-  .plan-price .subtext { font-size: 11px; color: var(--dim); margin-top: .15rem; }
-  .plan-divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
-  .plan-features { list-style: none; display: flex; flex-direction: column; gap: .55rem; margin-bottom: 1.75rem; }
-  .plan-features li { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: .6rem; }
-  .plan-features li::before { content: '✓'; color: var(--accent); font-size: 12px; font-weight: 700; flex-shrink: 0; }
-  .plan-features li.dim::before { color: var(--dim); }
-  .plan-cta {
-    display: block; text-align: center; text-decoration: none;
-    font-family: var(--font-body); font-size: 14px; font-weight: 600;
-    padding: .8rem; border-radius: 8px;
-    transition: opacity .15s, transform .15s;
-  }
-  .plan-cta.solid { background: var(--accent); color: #0f0f0f; }
-  .plan-cta.outline { border: 1px solid var(--border2); color: var(--text); }
-  .plan-cta:hover { opacity: .85; transform: translateY(-1px); }
+  .pricing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.25rem; align-items:start; }
+  .plan { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:2rem; position:relative; transition:border-color .2s,transform .2s; }
+  .plan:hover { transform:translateY(-4px); border-color:var(--border2); }
+  .plan.featured { border-color:var(--accent); background:#161a0e; }
+  .plan-badge { position:absolute; top:-11px; left:50%; transform:translateX(-50%); background:var(--accent); color:#0f0f0f; font-family:var(--font-mono); font-size:10px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; padding:.25rem .85rem; border-radius:999px; }
+  .plan-name { font-family:var(--font-disp); font-size:1.3rem; font-weight:800; margin-bottom:.25rem; }
+  .plan-price { margin:1rem 0; }
+  .plan-price .amount { font-family:var(--font-disp); font-size:2.4rem; font-weight:800; }
+  .plan-price .period { font-size:13px; color:var(--muted); margin-left:.25rem; }
+  .plan-price .subtext { font-size:11px; color:var(--dim); margin-top:.15rem; }
+  .plan-divider { height:1px; background:var(--border); margin:1.25rem 0; }
+  .plan-features { list-style:none; display:flex; flex-direction:column; gap:.55rem; margin-bottom:1.75rem; }
+  .plan-features li { font-size:13px; color:var(--muted); display:flex; align-items:center; gap:.6rem; }
+  .plan-features li::before { content:'✓'; color:var(--accent); font-size:12px; font-weight:700; flex-shrink:0; }
+  .plan-cta { display:block; text-align:center; text-decoration:none; font-family:var(--font-body); font-size:14px; font-weight:600; padding:.8rem; border-radius:8px; transition:opacity .15s,transform .15s; }
+  .plan-cta.solid   { background:var(--accent); color:#0f0f0f; }
+  .plan-cta.outline { border:1px solid var(--border2); color:var(--text); }
+  .plan-cta:hover   { opacity:.85; transform:translateY(-1px); }
 
   /* ── FAQ ── */
-  .faq-list { display: flex; flex-direction: column; gap: 6px; }
-  .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; transition: border-color .15s; }
-  .faq-item:hover { border-color: var(--border2); }
-  .faq-q { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 1rem 1.25rem; cursor: pointer; list-style: none; user-select: none; }
-  .faq-q::-webkit-details-marker { display: none; }
-  .faq-q-inner { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
-  .faq-tag { font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
-  .t-general  { background: #1e3a5f; color: #7eb8f7; }
-  .t-setup    { background: #1a3d2a; color: #6dba8a; }
-  .t-network  { background: #3d2e10; color: #d4a84b; }
-  .t-security { background: #3d1a1a; color: #e07070; }
-  .t-trouble  { background: #2e1a3d; color: #b07ee0; }
-  .faq-q-text { font-family: var(--font-disp); font-size: 14px; font-weight: 600; color: var(--text); margin: 0; line-height: 1.4; }
-  .faq-chev { font-size: 14px; color: var(--dim); transition: transform .2s; flex-shrink: 0; }
-  details[open] .faq-chev { transform: rotate(180deg); color: var(--muted); }
-  .faq-a { padding: 0 1.25rem 1rem; font-size: 13px; color: var(--muted); line-height: 1.8; border-top: 1px solid var(--border); padding-top: .75rem; }
-  .faq-a a { color: var(--accent2); text-decoration: none; }
-  .faq-a a:hover { text-decoration: underline; }
-  .faq-a code { font-family: var(--font-mono); font-size: 12px; background: #1a1a1a; border: 1px solid var(--border2); padding: 1px 6px; border-radius: 4px; color: #d4a84b; }
-  .faq-a ul { padding-left: 1.25rem; margin-top: .5rem; }
-  .faq-a li { margin-bottom: 4px; }
-  .faq-cats { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
-  .faq-cats button { background: transparent; border: 1px solid var(--border2); border-radius: 6px; padding: 5px 14px; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); cursor: pointer; transition: .15s; font-family: var(--font-body); }
-  .faq-cats button:hover { border-color: var(--muted); color: var(--text); }
-  .faq-cats button.active { background: var(--text); border-color: var(--text); color: #0f0f0f; }
+  .faq-list { display:flex; flex-direction:column; gap:6px; }
+  .faq-item { background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; transition:border-color .15s; }
+  .faq-item:hover { border-color:var(--border2); }
+  .faq-q { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:1rem 1.25rem; cursor:pointer; list-style:none; user-select:none; }
+  .faq-q::-webkit-details-marker { display:none; }
+  .faq-q-inner { display:flex; align-items:center; gap:10px; flex:1; min-width:0; }
+  .faq-tag { font-size:10px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:3px 8px; border-radius:4px; white-space:nowrap; flex-shrink:0; }
+  .t-general  { background:#1e3a5f; color:#7eb8f7; }
+  .t-setup    { background:#1a3d2a; color:#6dba8a; }
+  .t-network  { background:#3d2e10; color:#d4a84b; }
+  .t-security { background:#3d1a1a; color:#e07070; }
+  .t-trouble  { background:#2e1a3d; color:#b07ee0; }
+  .faq-q-text { font-family:var(--font-disp); font-size:14px; font-weight:600; color:var(--text); margin:0; line-height:1.4; }
+  .faq-chev { font-size:14px; color:var(--dim); transition:transform .2s; flex-shrink:0; }
+  details[open] .faq-chev { transform:rotate(180deg); color:var(--muted); }
+  .faq-a { padding:.75rem 1.25rem 1rem; font-size:13px; color:var(--muted); line-height:1.8; border-top:1px solid var(--border); }
+  .faq-a a { color:var(--accent2); text-decoration:none; }
+  .faq-a a:hover { text-decoration:underline; }
+  .faq-a code { font-family:var(--font-mono); font-size:12px; background:#1a1a1a; border:1px solid var(--border2); padding:1px 6px; border-radius:4px; color:#d4a84b; }
+  .faq-a ul { padding-left:1.25rem; margin-top:.5rem; }
+  .faq-a li { margin-bottom:4px; }
+  .faq-cats { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:1.25rem; }
+  .faq-cats button { background:transparent; border:1px solid var(--border2); border-radius:6px; padding:5px 14px; font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); cursor:pointer; transition:.15s; font-family:var(--font-body); }
+  .faq-cats button:hover { border-color:var(--muted); color:var(--text); }
+  .faq-cats button.active { background:var(--text); border-color:var(--text); color:#0f0f0f; }
 
   /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 3rem 2.5rem;
-    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
-  }
-  .footer-brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
-  .footer-brand img { height: 24px; }
-  .footer-brand span { font-family: var(--font-disp); font-size: 13px; font-weight: 700; color: var(--muted); }
-  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-  .footer-links a { font-size: 13px; color: var(--dim); text-decoration: none; transition: color .15s; }
-  .footer-links a:hover { color: var(--muted); }
-  .footer-copy { font-size: 12px; color: var(--dim); font-family: var(--font-mono); }
+  footer { border-top:1px solid var(--border); padding:3rem 2.5rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.5rem; }
+  .footer-brand { display:flex; align-items:center; gap:.6rem; text-decoration:none; }
+  .footer-brand img { height:24px; width:auto; opacity:.6; }
+  .footer-links { display:flex; gap:1.5rem; flex-wrap:wrap; }
+  .footer-links a { font-size:13px; color:var(--dim); text-decoration:none; transition:color .15s; }
+  .footer-links a:hover { color:var(--muted); }
+  .footer-copy { font-size:12px; color:var(--dim); font-family:var(--font-mono); }
 
-  /* ── SEPARATOR ── */
-  .sep { height: 1px; background: var(--border); max-width: 1000px; margin: 0 auto; }
+  .sep { height:1px; background:var(--border); max-width:1000px; margin:0 auto; }
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity .55s ease,transform .55s ease; }
+  .reveal.visible { opacity:1; transform:none; }
 
-  /* ── SCROLL REVEAL ── */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .55s ease, transform .55s ease; }
-  .reveal.visible { opacity: 1; transform: none; }
+  /* ── COMING SOON BANNER ── */
+  .coming-soon-banner { position:fixed; bottom:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:center; gap:1rem; padding:.75rem 2rem; background:repeating-linear-gradient(-45deg,#1a1200,#1a1200 12px,#221800 12px,#221800 24px); border-top:2px solid #e8a020; font-family:'DM Mono',monospace; }
+  .cs-badge { display:inline-flex; align-items:center; gap:.5rem; background:#e8a020; color:#0f0f0f; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:.3rem .85rem; border-radius:999px; }
+  .cs-badge::before { content:'⚠'; }
+  .cs-text { font-size:13px; color:#e8c87a; letter-spacing:.04em; }
 </style>
 </head>
 <body>
 
 <!-- ============================================================ -->
 <!-- COMING SOON BANNER — remove this block when the page goes live -->
-<style>
-  .coming-soon-banner {
-    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
-    display: flex; align-items: center; justify-content: center; gap: 1rem;
-    padding: .75rem 2rem;
-    background: repeating-linear-gradient(
-      -45deg,
-      #1a1200,
-      #1a1200 12px,
-      #221800 12px,
-      #221800 24px
-    );
-    border-top: 2px solid #e8a020;
-    font-family: 'DM Mono', monospace;
-  }
-  .cs-badge {
-    display: inline-flex; align-items: center; gap: .5rem;
-    background: #e8a020; color: #0f0f0f;
-    font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-    padding: .3rem .85rem; border-radius: 999px;
-  }
-  .cs-badge::before { content: '⚠'; }
-  .cs-text {
-    font-size: 13px; color: #e8c87a; letter-spacing: .04em;
-  }
-</style>
-<div class="coming-soon-banner" role="status" aria-label="Coming soon notice">
-  <span class="cs-badge">Coming soon</span>
-  <span class="cs-text">This page is not live yet — stay tuned.</span>
+<div class="coming-soon-banner" role="status">
+  <span class="cs-badge" data-en="Coming soon" data-es="Próximamente">Coming soon</span>
+  <span class="cs-text" data-en="This page is not live yet — stay tuned." data-es="Esta página aún no está publicada — ¡pronto disponible!">This page is not live yet — stay tuned.</span>
 </div>
 <!-- END COMING SOON BANNER -->
 <!-- ============================================================ -->
+
+<!-- LANG BAR -->
+<div class="lang-bar">
+  <button class="lang-btn active" id="btn-en" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span> EN</button>
+  <button class="lang-btn"        id="btn-es" onclick="setLang('es')"><span class="lang-flag">🇪🇸</span> ES</button>
+</div>
 
 <!-- NAV -->
 <nav>
   <a href="https://maemukisoft.com" class="nav-logo">
     <img src="logo_text_grey.png" alt="Maemukisoft">
   </a>
-  <a href="#pricing" class="nav-pill">Get started →</a>
+  <a href="#pricing" class="nav-pill" data-en="Get started →" data-es="Comenzar →">Get started →</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-tag">Maemuki Bridge · Field connectivity tool</div>
-    <h1>Bridge the Gap<br>Between <em>Field</em><br>and Office.</h1>
-    <p class="hero-sub">Empower your Field Service Engineers to expose onsite PLCs and industrial controllers to remote experts — instantly and securely. No permanent network changes required.</p>
+    <div class="hero-tag" data-en="Maemuki Bridge · Field connectivity tool" data-es="Maemuki Bridge · Herramienta de conectividad en campo">Maemuki Bridge · Field connectivity tool</div>
+    <h1 data-en="Bridge the Gap<br>Between <em>Field</em><br>and Office." data-es="Conecta el Campo<br>con la <em>Oficina.</em>">Bridge the Gap<br>Between <em>Field</em><br>and Office.</h1>
+    <p class="hero-sub" data-en="Empower your Field Service Engineers to expose onsite PLCs and industrial controllers to remote experts — instantly and securely. No permanent network changes required." data-es="Permite a tus técnicos de campo exponer PLCs y controladores industriales en las instalaciones del cliente a expertos remotos de forma instantánea y segura. Sin cambios permanentes en la red del cliente.">Empower your Field Service Engineers to expose onsite PLCs and industrial controllers to remote experts — instantly and securely. No permanent network changes required.</p>
     <div class="hero-ctas">
-      <a href="https://github.com/maemukisoft/maemuki-bridge/releases" class="btn-primary">↓ Download free</a>
-      <a href="#how-it-works" class="btn-ghost">See how it works</a>
+      <a href="https://github.com/maemukisoft/maemuki-bridge/releases" class="btn-primary" data-en="↓ Download free" data-es="↓ Descargar gratis">↓ Download free</a>
+      <a href="#how-it-works" class="btn-ghost" data-en="See how it works" data-es="Ver cómo funciona">See how it works</a>
     </div>
-
-    <!-- Diagram -->
     <div class="hero-diagram reveal">
       <div class="diag-node">
         <div class="diag-icon office">🖥️</div>
-        <span class="diag-label">Office Engineer</span>
-        <span class="diag-sub">Remote expert</span>
+        <span class="diag-label" data-en="Office Engineer" data-es="Ingeniero Oficina">Office Engineer</span>
+        <span class="diag-sub" data-en="Remote expert" data-es="Experto remoto">Remote expert</span>
       </div>
-      <div class="diag-arrow">
-        <div class="diag-line"></div>
-        <span class="diag-proto">VPN</span>
-      </div>
+      <div class="diag-arrow"><div class="diag-line"></div><span class="diag-proto">VPN</span></div>
       <div class="diag-node">
         <div class="diag-icon laptop">💻</div>
-        <span class="diag-label">FSE Laptop</span>
-        <span class="diag-sub">Bridge + VPN</span>
+        <span class="diag-label" data-en="FSE Laptop" data-es="Portátil FSE">FSE Laptop</span>
+        <span class="diag-sub" data-en="Bridge + VPN" data-es="Puente + VPN">Bridge + VPN</span>
       </div>
-      <div class="diag-arrow">
-        <div class="diag-line"></div>
-        <span class="diag-proto">LAN</span>
-      </div>
+      <div class="diag-arrow"><div class="diag-line"></div><span class="diag-proto">LAN</span></div>
       <div class="diag-node">
         <div class="diag-icon plc">🏭</div>
-        <span class="diag-label">Customer PLC</span>
-        <span class="diag-sub">Site network</span>
+        <span class="diag-label" data-en="Customer PLC" data-es="PLC del Cliente">Customer PLC</span>
+        <span class="diag-sub" data-en="Site network" data-es="Red del cliente">Site network</span>
       </div>
     </div>
   </div>
@@ -388,27 +283,27 @@
 <!-- HOW IT WORKS -->
 <section id="how-it-works">
   <div class="section-inner">
-    <p class="section-label">How it works</p>
-    <h2>Three steps.<br>Zero network changes.</h2>
-    <p class="section-intro">Maemuki Bridge works alongside your existing VPN. No IT tickets, no firewall exceptions at the customer site.</p>
+    <p class="section-label" data-en="How it works" data-es="Cómo funciona">How it works</p>
+    <h2 data-en="Three steps.<br>Zero network changes." data-es="Tres pasos.<br>Sin cambios en la red.">Three steps.<br>Zero network changes.</h2>
+    <p class="section-intro" data-en="Maemuki Bridge works alongside your existing VPN. No IT tickets, no firewall exceptions at the customer site." data-es="Maemuki Bridge funciona junto con tu VPN existente. Sin tickets de IT ni excepciones de cortafuegos en las instalaciones del cliente.">Maemuki Bridge works alongside your existing VPN. No IT tickets, no firewall exceptions at the customer site.</p>
     <div class="steps">
       <div class="step reveal">
         <span class="step-num">01</span>
         <div class="step-icon">🔌</div>
-        <h3>FSE connects on-site</h3>
-        <p>The field engineer connects their laptop to the customer's local network and verifies they can reach the PLC.</p>
+        <h3 data-en="FSE connects on-site" data-es="El FSE se conecta en campo">FSE connects on-site</h3>
+        <p data-en="The field engineer connects their laptop to the customer's local network and verifies they can reach the PLC." data-es="El técnico de campo conecta su portátil a la red local del cliente y verifica que puede alcanzar el PLC.">The field engineer connects their laptop to the customer's local network and verifies they can reach the PLC.</p>
       </div>
       <div class="step reveal" style="transition-delay:.1s">
         <span class="step-num">02</span>
         <div class="step-icon">🌐</div>
-        <h3>Run Maemuki Bridge</h3>
-        <p>Launch the app, select the target device, set the listen port, and start the proxy — it takes under a minute.</p>
+        <h3 data-en="Run Maemuki Bridge" data-es="Ejecutar Maemuki Bridge">Run Maemuki Bridge</h3>
+        <p data-en="Launch the app, select the target device, set the listen port, and start the proxy — it takes under a minute." data-es="Inicia la aplicación, selecciona el dispositivo de destino, configura el puerto de escucha y activa el proxy — en menos de un minuto.">Launch the app, select the target device, set the listen port, and start the proxy — it takes under a minute.</p>
       </div>
       <div class="step reveal" style="transition-delay:.2s">
         <span class="step-num">03</span>
         <div class="step-icon">⚡</div>
-        <h3>Office engineer connects</h3>
-        <p>The remote expert connects through the VPN to the FSE laptop address as if the PLC were on their own network.</p>
+        <h3 data-en="Office engineer connects" data-es="El ingeniero de oficina se conecta">Office engineer connects</h3>
+        <p data-en="The remote expert connects through the VPN to the FSE laptop address as if the PLC were on their own network." data-es="El experto remoto se conecta a través de la VPN a la dirección del portátil del FSE como si el PLC estuviera en su propia red.">The remote expert connects through the VPN to the FSE laptop address as if the PLC were on their own network.</p>
       </div>
     </div>
   </div>
@@ -419,52 +314,110 @@
 <!-- BENEFITS -->
 <section id="benefits">
   <div class="section-inner">
-    <p class="section-label">Key benefits</p>
-    <h2>Built for industrial<br>field realities.</h2>
-    <p class="section-intro">Designed for FSEs who need results fast — not IT projects that take weeks.</p>
+    <p class="section-label" data-en="Key benefits" data-es="Ventajas clave">Key benefits</p>
+    <h2 data-en="Built for industrial<br>field realities." data-es="Diseñado para la<br>realidad industrial en campo.">Built for industrial<br>field realities.</h2>
+    <p class="section-intro" data-en="Designed for FSEs who need results fast — not IT projects that take weeks." data-es="Diseñado para técnicos que necesitan resultados rápidos — no proyectos de IT que tardan semanas.">Designed for FSEs who need results fast — not IT projects that take weeks.</p>
     <div class="benefits-grid">
       <div class="benefit reveal">
         <div class="benefit-dot"></div>
         <div>
-          <h4>No permanent network changes</h4>
-          <p>Works entirely through the FSE laptop. Customer site infrastructure stays untouched.</p>
+          <h4 data-en="No permanent network changes" data-es="Sin cambios permanentes en la red">No permanent network changes</h4>
+          <p data-en="Works entirely through the FSE laptop. Customer site infrastructure stays untouched." data-es="Funciona íntegramente a través del portátil del FSE. La infraestructura del cliente no se modifica.">Works entirely through the FSE laptop. Customer site infrastructure stays untouched.</p>
         </div>
       </div>
       <div class="benefit reveal" style="transition-delay:.05s">
         <div class="benefit-dot"></div>
         <div>
-          <h4>Transparent TCP forwarding</h4>
-          <p>Modbus, EtherNet/IP, and any TCP-based protocol passes through unchanged.</p>
+          <h4 data-en="Transparent TCP forwarding" data-es="Reenvío TCP transparente">Transparent TCP forwarding</h4>
+          <p data-en="Modbus, EtherNet/IP, and any TCP-based protocol passes through unchanged." data-es="Modbus, EtherNet/IP y cualquier protocolo basado en TCP pasa sin alteraciones.">Modbus, EtherNet/IP, and any TCP-based protocol passes through unchanged.</p>
         </div>
       </div>
       <div class="benefit reveal" style="transition-delay:.1s">
         <div class="benefit-dot"></div>
         <div>
-          <h4>Built-in connectivity check</h4>
-          <p>Ping and port verification before starting the forward — know it works before the office engineer tries.</p>
+          <h4 data-en="Built-in connectivity check" data-es="Verificación de conectividad integrada">Built-in connectivity check</h4>
+          <p data-en="Ping and port verification before starting the forward — know it works before the office engineer tries." data-es="Ping y verificación de puertos antes de iniciar el reenvío — confirma que funciona antes de que el ingeniero de oficina intente conectarse.">Ping and port verification before starting the forward — know it works before the office engineer tries.</p>
         </div>
       </div>
       <div class="benefit reveal" style="transition-delay:.15s">
         <div class="benefit-dot"></div>
         <div>
-          <h4>Multiple simultaneous devices</h4>
-          <p>Forward several PLCs at once, each on its own port, from the same laptop session.</p>
+          <h4 data-en="Multiple simultaneous devices" data-es="Múltiples dispositivos simultáneos">Multiple simultaneous devices</h4>
+          <p data-en="Forward several PLCs at once, each on its own port, from the same laptop session." data-es="Reenvía varios PLCs a la vez, cada uno en su propio puerto, desde la misma sesión del portátil.">Forward several PLCs at once, each on its own port, from the same laptop session.</p>
         </div>
       </div>
       <div class="benefit reveal" style="transition-delay:.2s">
         <div class="benefit-dot"></div>
         <div>
-          <h4>Simple for FSE staff</h4>
-          <p>Clean UI with Start menu shortcut. No command line, no complex configuration required.</p>
+          <h4 data-en="Simple for FSE staff" data-es="Sencillo para el equipo FSE">Simple for FSE staff</h4>
+          <p data-en="Clean UI with Start menu shortcut. No command line, no complex configuration required." data-es="Interfaz limpia con acceso directo en el menú Inicio. Sin línea de comandos ni configuración compleja.">Clean UI with Start menu shortcut. No command line, no complex configuration required.</p>
         </div>
       </div>
       <div class="benefit reveal" style="transition-delay:.25s">
         <div class="benefit-dot"></div>
         <div>
-          <h4>Live message log</h4>
-          <p>See incoming frames in real time — immediately know if packets from the office are arriving.</p>
+          <h4 data-en="Live message log" data-es="Registro de mensajes en tiempo real">Live message log</h4>
+          <p data-en="See incoming frames in real time — immediately know if packets from the office are arriving." data-es="Visualiza los paquetes entrantes en tiempo real — sabe de inmediato si los paquetes de la oficina están llegando.">See incoming frames in real time — immediately know if packets from the office are arriving.</p>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- TAILSCALE SETUP -->
+<section id="vpn-setup">
+  <div class="section-inner">
+    <p class="section-label" data-en="VPN setup" data-es="Configuración VPN">VPN setup</p>
+    <h2 data-en="Connect in minutes<br>with Tailscale." data-es="Conecta en minutos<br>con Tailscale.">Connect in minutes<br>with Tailscale.</h2>
+    <p class="section-intro">
+      <span data-en="Maemuki Bridge works over any VPN. We recommend " data-es="Maemuki Bridge funciona con cualquier VPN. Recomendamos ">Maemuki Bridge works over any VPN. We recommend </span><a href="https://tailscale.com" target="_blank" rel="noopener" style="color:var(--accent2);text-decoration:none;">Tailscale</a><span data-en=" — free, zero-config, and built on WireGuard. The FSE laptop must run Windows." data-es=" — gratuito, sin configuración y basado en WireGuard. El portátil del FSE debe usar Windows."> — free, zero-config, and built on WireGuard. The FSE laptop must run Windows.</span>
+    </p>
+    <div class="ts-steps">
+      <div class="ts-step reveal">
+        <div class="ts-step-head">
+          <span class="ts-num">01</span>
+          <div>
+            <h3 data-en="Both users create a Tailscale account" data-es="Ambos usuarios crean una cuenta de Tailscale">Both users create a Tailscale account</h3>
+            <p data-en="Go to tailscale.com and sign up with Google, Microsoft, or GitHub. The free plan supports up to 100 devices — more than enough." data-es="Accede a tailscale.com y regístrate con Google, Microsoft o GitHub. El plan gratuito admite hasta 100 dispositivos — más que suficiente.">Go to <a href="https://tailscale.com" target="_blank" rel="noopener">tailscale.com</a> and sign up with Google, Microsoft, or GitHub. The free plan supports up to 100 devices — more than enough.</p>
+          </div>
+        </div>
+        <div class="ts-cmd">tailscale up</div>
+        <p class="ts-cmd-note" data-en="Run on each device after installing the client to authenticate and join the network." data-es="Ejecutar en cada dispositivo tras instalar el cliente para autenticarse y unirse a la red.">Run on each device after installing the client to authenticate and join the network.</p>
+      </div>
+      <div class="ts-connector reveal"></div>
+      <div class="ts-step reveal" style="transition-delay:.1s">
+        <div class="ts-step-head">
+          <span class="ts-num">02</span>
+          <div>
+            <h3 data-en="FSE shares their device with the office engineer" data-es="El FSE comparte su dispositivo con el ingeniero de oficina">FSE shares their device with the office engineer</h3>
+            <p data-en="In the Tailscale admin console, click ⋮ on your machine → Share → enter the office engineer's email → Send invite. They accept via the email link." data-es="En la consola de administración de Tailscale, haz clic en ⋮ en tu máquina → Compartir → introduce el correo del ingeniero de oficina → Enviar invitación. El destinatario acepta mediante el enlace del correo.">In the <a href="https://login.tailscale.com/admin/machines" target="_blank" rel="noopener">Tailscale admin console</a>, click ⋮ on your machine → <strong>Share</strong> → enter the office engineer's email → Send invite. They accept via the email link.</p>
+          </div>
+        </div>
+        <div class="ts-note">
+          <span class="ts-note-icon">↔</span>
+          <span data-en="For bidirectional access, the office engineer shares their device back using the same steps." data-es="Para acceso bidireccional, el ingeniero de oficina comparte su dispositivo de vuelta usando los mismos pasos.">For bidirectional access, the office engineer shares their device back using the same steps.</span>
+        </div>
+      </div>
+      <div class="ts-connector reveal"></div>
+      <div class="ts-step reveal" style="transition-delay:.2s">
+        <div class="ts-step-head">
+          <span class="ts-num">03</span>
+          <div>
+            <h3 data-en="Verify and run Maemuki Bridge" data-es="Verifica y ejecuta Maemuki Bridge">Verify and run Maemuki Bridge</h3>
+            <p data-en="Confirm the shared device appears with tailscale status. Then launch Maemuki Bridge on the FSE laptop — the office engineer connects using the FSE's Tailscale IP." data-es="Confirma que el dispositivo compartido aparece con tailscale status. Luego inicia Maemuki Bridge en el portátil del FSE — el ingeniero de oficina se conecta usando la IP de Tailscale del FSE.">Confirm the shared device appears with <code>tailscale status</code>. Then launch Maemuki Bridge on the FSE laptop — the office engineer connects using the FSE's Tailscale IP.</p>
+          </div>
+        </div>
+        <div class="ts-cmd">tailscale status</div>
+        <p class="ts-cmd-note" data-en="Run on the office engineer's machine to confirm the FSE laptop is visible and reachable." data-es="Ejecutar en el equipo del ingeniero de oficina para confirmar que el portátil del FSE es visible y accesible.">Run on the office engineer's machine to confirm the FSE laptop is visible and reachable.</p>
+      </div>
+    </div>
+    <div class="ts-footer reveal">
+      <span data-en="Need the full technical reference?" data-es="¿Necesitas la referencia técnica completa?">Need the full technical reference?</span>
+      <span>
+        <a href="https://maemukisoft.com/language/en/tailscale-multi-user-network-setup/" target="_blank" rel="noopener" data-en="Read the complete Tailscale setup guide →" data-es-href="https://maemukisoft.com/language/es/configuracion-de-red-tailscale-multi-usuario/" data-es="Leer la guía completa de configuración de Tailscale →">Read the complete Tailscale setup guide →</a>
+      </span>
     </div>
   </div>
 </section>
@@ -474,60 +427,53 @@
 <!-- PRICING -->
 <section id="pricing">
   <div class="section-inner">
-    <p class="section-label">Pricing</p>
-    <h2>Simple, transparent plans.</h2>
-    <p class="section-intro">All plans include unlimited connections and simultaneous sessions. Pay per seat.</p>
+    <p class="section-label" data-en="Pricing" data-es="Precios">Pricing</p>
+    <h2 data-en="Simple, transparent plans." data-es="Planes simples y transparentes.">Simple, transparent plans.</h2>
+    <p class="section-intro" data-en="All plans include unlimited connections and simultaneous sessions. Pay per seat." data-es="Todos los planes incluyen conexiones ilimitadas y sesiones simultáneas. Pago por licencia.">All plans include unlimited connections and simultaneous sessions. Pay per seat.</p>
     <div class="pricing-grid">
-
-      <!-- Monthly -->
       <div class="plan reveal">
-        <div class="plan-name">Monthly</div>
+        <div class="plan-name" data-en="Monthly" data-es="Mensual">Monthly</div>
         <div class="plan-price">
-          <span class="amount">39.9€</span><span class="period">/ month</span>
-          <div class="subtext">per seat · billed monthly</div>
+          <span class="amount">39.9€</span><span class="period" data-en="/ month" data-es="/ mes">/ month</span>
+          <div class="subtext" data-en="per seat · billed monthly" data-es="por licencia · facturación mensual">per seat · billed monthly</div>
         </div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
-          <li>Unlimited connections</li>
-          <li>Several simultaneous connections</li>
-          <li>1 seat transfer / year</li>
+          <li data-en="Unlimited connections" data-es="Conexiones ilimitadas">Unlimited connections</li>
+          <li data-en="Several simultaneous connections" data-es="Varias conexiones simultáneas">Several simultaneous connections</li>
+          <li data-en="1 seat transfer / year" data-es="1 transferencia de licencia / año">1 seat transfer / year</li>
         </ul>
-        <a href="https://maemukisoft.com/language/en/contact/" class="plan-cta outline">Buy Monthly</a>
+        <a href="https://maemukisoft.com/language/en/contact/" class="plan-cta outline" data-en="Buy Monthly" data-es="Comprar mensual" data-es-href="https://maemukisoft.com/language/es/contacto/">Buy Monthly</a>
       </div>
-
-      <!-- Yearly -->
       <div class="plan featured reveal" style="transition-delay:.1s">
-        <div class="plan-badge">Best value</div>
-        <div class="plan-name">Yearly</div>
+        <div class="plan-badge" data-en="Best value" data-es="Mejor precio">Best value</div>
+        <div class="plan-name" data-en="Yearly" data-es="Anual">Yearly</div>
         <div class="plan-price">
-          <span class="amount">249€</span><span class="period">/ year</span>
-          <div class="subtext">per seat · save ~48%</div>
+          <span class="amount">249€</span><span class="period" data-en="/ year" data-es="/ año">/ year</span>
+          <div class="subtext" data-en="per seat · save ~48%" data-es="por licencia · ahorra ~48%">per seat · save ~48%</div>
         </div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
-          <li>Unlimited connections</li>
-          <li>Several simultaneous connections</li>
-          <li>1 seat transfer / year</li>
+          <li data-en="Unlimited connections" data-es="Conexiones ilimitadas">Unlimited connections</li>
+          <li data-en="Several simultaneous connections" data-es="Varias conexiones simultáneas">Several simultaneous connections</li>
+          <li data-en="1 seat transfer / year" data-es="1 transferencia de licencia / año">1 seat transfer / year</li>
         </ul>
-        <a href="https://maemukisoft.com/language/en/contact/" class="plan-cta solid">Buy Yearly</a>
+        <a href="https://maemukisoft.com/language/en/contact/" class="plan-cta solid" data-en="Buy Yearly" data-es="Comprar anual" data-es-href="https://maemukisoft.com/language/es/contacto/">Buy Yearly</a>
       </div>
-
-      <!-- Enterprise -->
       <div class="plan reveal" style="transition-delay:.2s">
         <div class="plan-name">Enterprise</div>
         <div class="plan-price">
-          <span class="amount" style="font-size:1.6rem;color:var(--muted)">Custom</span>
-          <div class="subtext">tailored to your team</div>
+          <span class="amount" style="font-size:1.6rem;color:var(--muted)" data-en="Custom" data-es="A medida">Custom</span>
+          <div class="subtext" data-en="tailored to your team" data-es="adaptado a tu equipo">tailored to your team</div>
         </div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
-          <li>Unlimited connections</li>
-          <li>Several instances simultaneously</li>
-          <li>Application personalization</li>
+          <li data-en="Unlimited connections" data-es="Conexiones ilimitadas">Unlimited connections</li>
+          <li data-en="Several instances simultaneously" data-es="Varias instancias simultáneas">Several instances simultaneously</li>
+          <li data-en="Application personalization" data-es="Personalización de la aplicación">Application personalization</li>
         </ul>
-        <a href="https://maemukisoft.com/language/en/contact/" class="plan-cta outline">Contact us</a>
+        <a href="https://maemukisoft.com/language/en/contact/" class="plan-cta outline" data-en="Contact us" data-es="Contáctanos" data-es-href="https://maemukisoft.com/language/es/contacto/">Contact us</a>
       </div>
-
     </div>
   </div>
 </section>
@@ -537,9 +483,9 @@
 <!-- FAQ -->
 <section id="faq">
   <div class="section-inner">
-    <p class="section-label">FAQ</p>
-    <h2>Frequent questions.</h2>
-    <p class="section-intro">Everything you need to know before deploying Maemuki Bridge.</p>
+    <p class="section-label" data-en="FAQ" data-es="Preguntas frecuentes">FAQ</p>
+    <h2 data-en="Frequent questions." data-es="Preguntas frecuentes.">Frequent questions.</h2>
+    <p class="section-intro" data-en="Everything you need to know before deploying Maemuki Bridge." data-es="Todo lo que necesitas saber antes de usar Maemuki Bridge.">Everything you need to know before deploying Maemuki Bridge.</p>
     <div class="faq-cats" id="faq-cats"></div>
     <div class="faq-list" id="faq-list"></div>
   </div>
@@ -550,67 +496,130 @@
 <!-- FOOTER -->
 <footer>
   <a href="https://maemukisoft.com" class="footer-brand">
-    <img src="logo_text_grey.png" alt="Maemukisoft" style="height:24px;width:auto;opacity:.6;">
+    <img src="logo_text_grey.png" alt="Maemukisoft">
   </a>
-  <div class="footer-links">
-    <a href="https://maemukisoft.com/language/en/services/">Services</a>
-    <a href="https://maemukisoft.com/language/en/about-us/">About us</a>
-    <a href="https://maemukisoft.com/language/en/contact/">Contact</a>
+  <div class="footer-links" id="footer-links">
+    <a href="https://maemukisoft.com/language/en/services/"  data-en="Services"  data-es="Servicios"  data-es-href="https://maemukisoft.com/language/es/servicios/">Services</a>
+    <a href="https://maemukisoft.com/language/en/about-us/" data-en="About us"  data-es="Sobre nosotros" data-es-href="https://maemukisoft.com/language/es/sobre-nosotros/">About us</a>
+    <a href="https://maemukisoft.com/language/en/contact/"  data-en="Contact"   data-es="Contacto"   data-es-href="https://maemukisoft.com/language/es/contacto/">Contact</a>
     <a href="https://github.com/maemukisoft/maemuki-bridge">GitHub</a>
   </div>
   <span class="footer-copy">maemukisoft.com ®2026</span>
 </footer>
 
 <script>
-// FAQ
-(function(){
-var faqs=[
-  {cat:"General",tc:"t-general",q:"What is Maemuki Bridge?",a:"Maemuki Bridge is a lightweight TCP forwarding application for field service engineers (FSE). It exposes a remote device — such as a PLC or industrial controller — on a customer's local network to an office engineer, using the FSE's laptop as a transparent communication bridge."},
-  {cat:"General",tc:"t-general",q:"Who is it designed for?",a:"Field service engineers working on-site at customer facilities, and office-based engineers who need to remotely access industrial devices for troubleshooting, configuration, or commissioning."},
-  {cat:"General",tc:"t-general",q:"Does it modify the communication protocol?",a:"No. The bridge is a transparent TCP forwarder — it does not inspect or modify the payload. Modbus, EtherNet/IP, or any TCP-based protocol passes through unchanged."},
-  {cat:"General",tc:"t-general",q:"What platforms does Maemuki Bridge run on?",a:"Windows. It targets .NET 10, so the .NET 10 runtime must be installed on the FSE laptop."},
-  {cat:"Setup",tc:"t-setup",q:"How do I install Maemuki Bridge?",a:"<ul><li>Go to the <a href='https://github.com/maemukisoft/maemuki-bridge/releases' target='_blank' rel='noopener'>Releases page on GitHub</a> and download the latest installer.</li><li>Run the installer — it guides you through setup and registers the application.</li><li>The .NET 10 runtime must be present. Download it from Microsoft if needed.</li></ul>"},
-  {cat:"Setup",tc:"t-setup",q:"How do I start the bridge?",a:"The installer creates a shortcut in the Windows Start menu and optionally on the desktop. Typical install path: <code>C:\\Program Files (x86)\\Maemuki Bridge\\Maemuki-Bridge.exe</code>.<br><br>Once open, select the target device, set the listen and forward ports, and start the proxy."},
-  {cat:"Setup",tc:"t-setup",q:"How do I configure the device list?",a:"Create a <code>hosts.json</code> file in the application folder. Each entry maps a display name to an IP address:<br><br><code>{\"PLC-1\": \"192.168.1.10\"}</code><br><br>These populate the <em>Forward host</em> dropdown. You can also type an IP address directly."},
-  {cat:"Network",tc:"t-network",q:"What does the office engineer need to connect?",a:"They must be on the company VPN (or any routed network reaching the FSE laptop). The FSE shares their laptop's VPN address and listen port — e.g. <code>10.8.0.12:15002</code>. The engineer connects their client application to that address as if it were the PLC."},
-  {cat:"Network",tc:"t-network",q:"What firewall changes are needed?",a:"On the FSE laptop, Windows Firewall must allow inbound connections on the selected listen port(s). No permanent changes at the customer site are required."},
-  {cat:"Network",tc:"t-network",q:"Can I forward more than one device at a time?",a:"Yes. Add multiple forward mappings, each with its own listen port, so the office engineer can reach several devices simultaneously."},
-  {cat:"Security",tc:"t-security",q:"Are there security guidelines?",a:"<ul><li>Only run with management consent on authorised networks.</li><li>Use VPN and corporate authentication to restrict access.</li><li>Keep the laptop patched and run with minimal privileges.</li><li>Restrict forwarded ports and close sessions when done.</li></ul>"},
-  {cat:"Security",tc:"t-security",q:"How is access controlled?",a:"Access relies on the VPN and corporate network infrastructure. Maemuki Bridge does not implement its own authentication — VPN and firewall configuration are the primary security boundary."},
-  {cat:"Troubleshooting",tc:"t-trouble",q:"The office engineer gets 'connection refused'. What to check?",a:"<ul><li>Confirm Maemuki Bridge is running on the FSE laptop.</li><li>Check Windows Firewall allows inbound traffic on the listen port.</li><li>Verify the correct IP/hostname and port number.</li></ul>"},
-  {cat:"Troubleshooting",tc:"t-trouble",q:"I cannot reach the PLC from the laptop. What to check?",a:"<ul><li>Verify the laptop has LAN connectivity to the customer network.</li><li>Check local firewalls on the PLC or site equipment.</li><li>Use the built-in ping and port check in the Maemuki Bridge UI.</li></ul>"},
-  {cat:"Troubleshooting",tc:"t-trouble",q:"The office engineer cannot reach my laptop at all. What to check?",a:"<ul><li>Check the message log in Maemuki Bridge — if frames from the office are arriving you will see activity there. This tells you whether the problem is on the network or client side.</li><li>Confirm the VPN on both sides is active and routed correctly.</li><li>Verify the laptop VPN IP or hostname is correct.</li><li>Check corporate firewall rules between the office and VPN tunnel.</li></ul>"}
-];
-var cats=["All"].concat([...new Set(faqs.map(f=>f.cat))]);
-var active="All";
-var cEl=document.getElementById("faq-cats"),lEl=document.getElementById("faq-list");
-function rCats(){
-  cEl.innerHTML="";
-  cats.forEach(c=>{
-    var b=document.createElement("button");
-    b.textContent=c; if(c===active)b.classList.add("active");
-    b.onclick=()=>{active=c;rCats();rFaqs();};
+// ── TRANSLATIONS ──────────────────────────────────────────────
+var FAQS = {
+  en: [
+    {cat:"General",tc:"t-general",q:"What is Maemuki Bridge?",a:"Maemuki Bridge is a lightweight TCP forwarding application for field service engineers (FSE). It exposes a remote device — such as a PLC or industrial controller — on a customer's local network to an office engineer, using the FSE's laptop as a transparent communication bridge."},
+    {cat:"General",tc:"t-general",q:"Who is it designed for?",a:"Field service engineers working on-site at customer facilities, and office-based engineers who need to remotely access industrial devices for troubleshooting, configuration, or commissioning."},
+    {cat:"General",tc:"t-general",q:"Does it modify the communication protocol?",a:"No. The bridge is a transparent TCP forwarder — it does not inspect or modify the payload. Modbus, EtherNet/IP, or any TCP-based protocol passes through unchanged."},
+    {cat:"General",tc:"t-general",q:"What platforms does Maemuki Bridge run on?",a:"Windows. It targets .NET 10, so the .NET 10 runtime must be installed on the FSE laptop."},
+    {cat:"Setup",tc:"t-setup",q:"How do I install Maemuki Bridge?",a:"<ul><li>Go to the <a href='https://github.com/maemukisoft/maemuki-bridge/releases' target='_blank' rel='noopener'>Releases page on GitHub</a> and download the latest installer.</li><li>Run the installer — it guides you through setup and registers the application.</li><li>The .NET 10 runtime must be present. Download it from Microsoft if needed.</li></ul>"},
+    {cat:"Setup",tc:"t-setup",q:"How do I start the bridge?",a:"The installer creates a shortcut in the Windows Start menu and optionally on the desktop. Typical install path: <code>C:\\Program Files (x86)\\Maemuki Bridge\\Maemuki-Bridge.exe</code>.<br><br>Once open, select the target device, set the listen and forward ports, and start the proxy."},
+    {cat:"Setup",tc:"t-setup",q:"How do I configure the device list?",a:"Create a <code>hosts.json</code> file in the application folder. Each entry maps a display name to an IP address:<br><br><code>{\"PLC-1\": \"192.168.1.10\"}</code><br><br>These populate the <em>Forward host</em> dropdown. You can also type an IP address directly."},
+    {cat:"Network",tc:"t-network",q:"What does the office engineer need to connect?",a:"They must be on the company VPN (or any routed network reaching the FSE laptop). The FSE shares their laptop's VPN address and listen port — e.g. <code>10.8.0.12:15002</code>. The engineer connects their client application to that address as if it were the PLC."},
+    {cat:"Network",tc:"t-network",q:"What firewall changes are needed?",a:"On the FSE laptop, Windows Firewall must allow inbound connections on the selected listen port(s). No permanent changes at the customer site are required."},
+    {cat:"Network",tc:"t-network",q:"Can I forward more than one device at a time?",a:"Yes. Add multiple forward mappings, each with its own listen port, so the office engineer can reach several devices simultaneously."},
+    {cat:"Security",tc:"t-security",q:"Are there security guidelines?",a:"<ul><li>Only run with management consent on authorised networks.</li><li>Use VPN and corporate authentication to restrict access.</li><li>Keep the laptop patched and run with minimal privileges.</li><li>Restrict forwarded ports and close sessions when done.</li></ul>"},
+    {cat:"Security",tc:"t-security",q:"How is access controlled?",a:"Access relies on the VPN and corporate network infrastructure. Maemuki Bridge does not implement its own authentication — VPN and firewall configuration are the primary security boundary."},
+    {cat:"Troubleshooting",tc:"t-trouble",q:"The office engineer gets 'connection refused'. What to check?",a:"<ul><li>Confirm Maemuki Bridge is running on the FSE laptop.</li><li>Check Windows Firewall allows inbound traffic on the listen port.</li><li>Verify the correct IP/hostname and port number.</li></ul>"},
+    {cat:"Troubleshooting",tc:"t-trouble",q:"I cannot reach the PLC from the laptop. What to check?",a:"<ul><li>Verify the laptop has LAN connectivity to the customer network.</li><li>Check local firewalls on the PLC or site equipment.</li><li>Use the built-in ping and port check in the Maemuki Bridge UI.</li></ul>"},
+    {cat:"Troubleshooting",tc:"t-trouble",q:"The office engineer cannot reach my laptop at all. What to check?",a:"<ul><li>Check the message log in Maemuki Bridge — if frames from the office are arriving you will see activity there. This tells you whether the problem is on the network or client side.</li><li>Confirm the VPN on both sides is active and routed correctly.</li><li>Verify the laptop VPN IP or hostname is correct.</li><li>Check corporate firewall rules between the office and VPN tunnel.</li></ul>"}
+  ],
+  es: [
+    {cat:"General",tc:"t-general",q:"¿Qué es Maemuki Bridge?",a:"Maemuki Bridge es una aplicación ligera de reenvío TCP diseñada para técnicos de campo (FSE). Permite exponer un dispositivo remoto — como un PLC u otro controlador industrial — en la red local del cliente a un ingeniero en la oficina, utilizando el portátil del FSE como puente de comunicación transparente."},
+    {cat:"General",tc:"t-general",q:"¿Para quién está diseñado?",a:"Para técnicos de campo que trabajan en las instalaciones del cliente y para ingenieros en la oficina que necesitan acceder remotamente a dispositivos industriales para diagnóstico, configuración o puesta en marcha."},
+    {cat:"General",tc:"t-general",q:"¿Modifica el protocolo de comunicación?",a:"No. El puente es un reenviador TCP transparente: no inspecciona ni modifica el contenido del protocolo. Modbus, EtherNet/IP o cualquier protocolo basado en TCP pasa sin alteraciones."},
+    {cat:"General",tc:"t-general",q:"¿En qué plataformas funciona Maemuki Bridge?",a:"Windows. Requiere .NET 10, por lo que el runtime de .NET 10 debe estar instalado en el portátil del FSE."},
+    {cat:"Instalación",tc:"t-setup",q:"¿Cómo instalo Maemuki Bridge?",a:"<ul><li>Ve a la <a href='https://github.com/maemukisoft/maemuki-bridge/releases' target='_blank' rel='noopener'>página de Releases en GitHub</a> y descarga el instalador más reciente.</li><li>Ejecuta el instalador — te guiará por el proceso de configuración y registrará la aplicación.</li><li>El runtime de .NET 10 debe estar presente. Descárgalo desde Microsoft si es necesario.</li></ul>"},
+    {cat:"Instalación",tc:"t-setup",q:"¿Cómo inicio el puente?",a:"El instalador crea un acceso directo en el menú Inicio de Windows y opcionalmente en el escritorio. Ruta de instalación típica: <code>C:\\Program Files (x86)\\Maemuki Bridge\\Maemuki-Bridge.exe</code>.<br><br>Una vez abierta la aplicación, selecciona el dispositivo de destino, configura los puertos de escucha y reenvío, y activa el proxy."},
+    {cat:"Instalación",tc:"t-setup",q:"¿Cómo configuro la lista de dispositivos?",a:"Crea un archivo <code>hosts.json</code> en la carpeta de la aplicación. Cada entrada asocia un nombre descriptivo con una dirección IP:<br><br><code>{\"PLC-1\": \"192.168.1.10\"}</code><br><br>Estas entradas aparecen en el desplegable <em>Forward host</em>. También puedes escribir una dirección IP directamente."},
+    {cat:"Red",tc:"t-network",q:"¿Qué necesita el ingeniero de oficina para conectarse?",a:"Debe estar en la VPN corporativa (o en cualquier red con acceso al portátil del FSE). El FSE le proporciona la dirección VPN de su portátil y el puerto de escucha — p. ej. <code>10.8.0.12:15002</code>. El ingeniero conecta su aplicación cliente a esa dirección como si fuera el propio PLC."},
+    {cat:"Red",tc:"t-network",q:"¿Qué cambios en el cortafuegos son necesarios?",a:"En el portátil del FSE, el Firewall de Windows debe permitir conexiones entrantes en los puertos de escucha seleccionados. No se requieren cambios permanentes en las instalaciones del cliente."},
+    {cat:"Red",tc:"t-network",q:"¿Puedo reenviar más de un dispositivo a la vez?",a:"Sí. Añade múltiples mappings de reenvío, cada uno con su propio puerto de escucha, para que el ingeniero de oficina pueda acceder a varios dispositivos simultáneamente."},
+    {cat:"Seguridad",tc:"t-security",q:"¿Existen directrices de seguridad?",a:"<ul><li>Ejecuta Maemuki Bridge solo con el consentimiento de la dirección y en redes autorizadas.</li><li>Utiliza VPN y autenticación corporativa para restringir el acceso.</li><li>Mantén el portátil actualizado y ejecuta la aplicación con privilegios mínimos.</li><li>Restringe los puertos reenviados y cierra las sesiones al terminar.</li></ul>"},
+    {cat:"Seguridad",tc:"t-security",q:"¿Cómo se controla el acceso?",a:"El control de acceso depende de la VPN y de la infraestructura de red corporativa. Maemuki Bridge no implementa su propia capa de autenticación — la VPN y la configuración del cortafuegos son el principal perímetro de seguridad."},
+    {cat:"Resolución de problemas",tc:"t-trouble",q:"El ingeniero de oficina recibe 'connection refused'. ¿Qué comprobar?",a:"<ul><li>Confirma que Maemuki Bridge está en ejecución en el portátil del FSE.</li><li>Comprueba que el Firewall de Windows permite el tráfico entrante en el puerto de escucha.</li><li>Verifica que se usa la dirección IP o nombre de host y el puerto correctos.</li></ul>"},
+    {cat:"Resolución de problemas",tc:"t-trouble",q:"No puedo alcanzar el PLC desde el portátil. ¿Qué comprobar?",a:"<ul><li>Verifica que el portátil tiene conectividad LAN con la red del cliente.</li><li>Comprueba el cortafuegos local del PLC o del equipamiento de red.</li><li>Usa la función de ping y verificación de puertos integrada en Maemuki Bridge.</li></ul>"},
+    {cat:"Resolución de problemas",tc:"t-trouble",q:"El ingeniero de oficina no puede alcanzar el portátil en absoluto. ¿Qué comprobar?",a:"<ul><li>Revisa el registro de mensajes de Maemuki Bridge — si los paquetes del ingeniero de oficina están llegando, verás actividad escrita allí. Esto ayuda a determinar si el problema está en la red o en el lado del cliente.</li><li>Confirma que la VPN de ambos lados está activa y enrutada correctamente.</li><li>Verifica que la dirección IP o nombre de host VPN del portátil es correcto.</li><li>Comprueba las reglas del cortafuegos corporativo entre la red de la oficina y el túnel VPN.</li></ul>"}
+  ]
+};
+
+var ALL_LABELS = { en: "All", es: "Todas" };
+var currentLang = "en";
+var activeCat   = "All";
+
+// ── FAQ renderer ──────────────────────────────────────────────
+var cEl = document.getElementById("faq-cats");
+var lEl = document.getElementById("faq-list");
+
+function renderFaqCats() {
+  var faqs = FAQS[currentLang];
+  var all  = ALL_LABELS[currentLang];
+  var cats = [all].concat([...new Set(faqs.map(f => f.cat))]);
+  // reset active if needed
+  if (activeCat !== all && !cats.includes(activeCat)) activeCat = all;
+  cEl.innerHTML = "";
+  cats.forEach(c => {
+    var b = document.createElement("button");
+    b.textContent = c;
+    if (c === activeCat) b.classList.add("active");
+    b.onclick = () => { activeCat = c; renderFaqCats(); renderFaqItems(); };
     cEl.appendChild(b);
   });
 }
-function rFaqs(){
-  var v=active==="All"?faqs:faqs.filter(f=>f.cat===active);
-  lEl.innerHTML="";
-  v.forEach(f=>{
-    var d=document.createElement("details");
-    d.className="faq-item";
-    d.innerHTML=`<summary class="faq-q"><div class="faq-q-inner"><span class="faq-tag ${f.tc}">${f.cat}</span><p class="faq-q-text">${f.q}</p></div><span class="faq-chev">&#8964;</span></summary><div class="faq-a">${f.a}</div>`;
+
+function renderFaqItems() {
+  var faqs = FAQS[currentLang];
+  var all  = ALL_LABELS[currentLang];
+  var v    = activeCat === all ? faqs : faqs.filter(f => f.cat === activeCat);
+  lEl.innerHTML = "";
+  v.forEach(f => {
+    var d = document.createElement("details");
+    d.className = "faq-item";
+    d.innerHTML = `<summary class="faq-q"><div class="faq-q-inner"><span class="faq-tag ${f.tc}">${f.cat}</span><p class="faq-q-text">${f.q}</p></div><span class="faq-chev">&#8964;</span></summary><div class="faq-a">${f.a}</div>`;
     lEl.appendChild(d);
   });
 }
-rCats(); rFaqs();
-})();
+
+// ── Language switcher ─────────────────────────────────────────
+function setLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+
+  // toggle button states
+  document.getElementById("btn-en").classList.toggle("active", lang === "en");
+  document.getElementById("btn-es").classList.toggle("active", lang === "es");
+
+  // swap all [data-en] / [data-es] text nodes
+  document.querySelectorAll("[data-en]").forEach(el => {
+    var txt = el.getAttribute("data-" + lang);
+    if (txt) el.innerHTML = txt;
+    // swap href if data-es-href is present
+    var href = el.getAttribute("data-" + lang + "-href");
+    if (href) el.href = href;
+    else if (lang === "en") {
+      var origHref = el.getAttribute("data-en-href");
+      if (origHref) el.href = origHref;
+    }
+  });
+
+  // re-render FAQ with correct language & reset category
+  activeCat = ALL_LABELS[lang];
+  renderFaqCats();
+  renderFaqItems();
+}
+
+// ── Init ──────────────────────────────────────────────────────
+renderFaqCats();
+renderFaqItems();
 
 // Scroll reveal
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("visible"); });
-},{threshold:.12});
-document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+}, { threshold: .12 });
+document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
