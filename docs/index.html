@@ -6,7 +6,7 @@
 <title>Maemuki Bridge – Connect Field to Office</title>
 <link rel="icon" type="image/png" href="https://maemukisoft.com/wp-content/uploads/2026/02/logo-300x300.png">
 <link rel="shortcut icon" href="https://maemukisoft.com/wp-content/uploads/2026/02/logo-300x300.png">
-<!-- Google Analytics — replace G-XXXXXXXXXX with your Measurement ID -->
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-769MDS2JEW"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -173,8 +173,8 @@
   .ts-footer a:hover { text-decoration:underline; }
 
   /* ── PRICING ── */
-  .pricing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.25rem; align-items:start; }
-  .plan { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:2rem; position:relative; transition:border-color .2s,transform .2s; }
+  .pricing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.25rem; align-items:stretch; }
+  .plan { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:2rem; position:relative; transition:border-color .2s,transform .2s; display:flex; flex-direction:column; }
   .plan:hover { transform:translateY(-4px); border-color:var(--border2); }
   .plan.featured { border-color:var(--accent); background:#161a0e; }
   .plan-badge { position:absolute; top:-11px; left:50%; transform:translateX(-50%); background:var(--accent); color:#0f0f0f; font-family:var(--font-mono); font-size:10px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; padding:.25rem .85rem; border-radius:999px; }
@@ -184,7 +184,7 @@
   .plan-price .period { font-size:13px; color:var(--muted); margin-left:.25rem; }
   .plan-price .subtext { font-size:11px; color:var(--dim); margin-top:.15rem; }
   .plan-divider { height:1px; background:var(--border); margin:1.25rem 0; }
-  .plan-features { list-style:none; display:flex; flex-direction:column; gap:.55rem; margin-bottom:1.75rem; }
+  .plan-features { list-style:none; display:flex; flex-direction:column; gap:.55rem; margin-bottom:1.75rem; flex:1; }
   .plan-features li { font-size:13px; color:var(--muted); display:flex; align-items:center; gap:.6rem; }
   .plan-features li::before { content:'✓'; color:var(--accent); font-size:12px; font-weight:700; flex-shrink:0; }
   .plan-cta { display:block; text-align:center; text-decoration:none; font-family:var(--font-body); font-size:14px; font-weight:600; padding:.8rem; border-radius:8px; transition:opacity .15s,transform .15s; }
@@ -218,6 +218,25 @@
   .faq-cats button { background:transparent; border:1px solid var(--border2); border-radius:6px; padding:5px 14px; font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); cursor:pointer; transition:.15s; font-family:var(--font-body); }
   .faq-cats button:hover { border-color:var(--muted); color:var(--text); }
   .faq-cats button.active { background:var(--text); border-color:var(--text); color:#0f0f0f; }
+
+  /* ── DOWNLOAD BAR ── */
+  .download-bar {
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.25rem;
+    margin-top:2rem; padding:1.25rem 1.75rem;
+    background:rgba(200,240,96,.06); border:1px solid rgba(200,240,96,.2);
+    border-radius:12px;
+  }
+  .download-bar-text { display:flex; flex-direction:column; gap:.25rem; }
+  .download-bar-title { font-family:var(--font-disp); font-size:1rem; font-weight:700; color:var(--text); }
+  .download-bar-sub   { font-size:13px; color:var(--muted); }
+  .download-bar-btn {
+    display:inline-flex; align-items:center; gap:.5rem; flex-shrink:0;
+    background:var(--accent); color:#0f0f0f;
+    font-family:var(--font-body); font-size:14px; font-weight:600;
+    padding:.7rem 1.5rem; border-radius:8px; text-decoration:none;
+    transition:opacity .15s, transform .15s;
+  }
+  .download-bar-btn:hover { opacity:.88; transform:translateY(-1px); }
 
   /* ── FOOTER ── */
   footer { border-top:1px solid var(--border); padding:3rem 2.5rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.5rem; }
@@ -286,7 +305,7 @@
     <h1 data-en="Bridge the Gap<br>Between <em>Field</em><br>and Office." data-es="Conecta el Campo<br>con la <em>Oficina.</em>">Bridge the Gap<br>Between <em>Field</em><br>and Office.</h1>
     <p class="hero-sub" data-en="Empower your Field Service Engineers to expose onsite PLCs and industrial controllers to remote experts — instantly and securely. No permanent network changes required." data-es="Permite a tus técnicos de campo exponer PLCs y controladores industriales en las instalaciones del cliente a expertos remotos de forma instantánea y segura. Sin cambios permanentes en la red del cliente.">Empower your Field Service Engineers to expose onsite PLCs and industrial controllers to remote experts — instantly and securely. No permanent network changes required.</p>
     <div class="hero-ctas">
-      <a href="https://github.com/maemukisoft/maemuki-bridge/releases" class="btn-primary" data-en="↓ Download free" data-es="↓ Descargar gratis">↓ Download free</a>
+      <a href="https://github.com/maemukisoft/maemuki-bridge/releases" class="btn-primary" target="_blank" rel="noopener" data-en="↓ Download free" data-es="↓ Descargar gratis">↓ Download free</a>
       <a href="#how-it-works" class="btn-ghost" data-en="See how it works" data-es="Ver cómo funciona">See how it works</a>
     </div>
     <div class="hero-diagram reveal">
@@ -476,7 +495,7 @@
           <li data-en="Several simultaneous connections" data-es="Varias conexiones simultáneas">Several simultaneous connections</li>
           <li data-en="1 seat transfer / year" data-es="1 transferencia de licencia / año">1 seat transfer / year</li>
         </ul>
-        <a href="https://maemukisoft.com/language/en/contact/" class="plan-cta outline" data-en="Buy Monthly" data-es="Comprar mensual" data-es-href="https://maemukisoft.com/language/es/contacto/">Buy Monthly</a>
+        <a href="https://buy.stripe.com/9B63cu7qo9rN6PjezE2sM02" class="plan-cta outline" target="_blank" rel="noopener" data-en="Buy Monthly" data-es="Comprar mensual" data-es-href="https://buy.stripe.com/9B63cu7qo9rN6PjezE2sM02">Buy Monthly</a>
       </div>
       <div class="plan featured reveal" style="transition-delay:.1s">
         <div class="plan-badge" data-en="Best value" data-es="Mejor precio">Best value</div>
@@ -491,7 +510,7 @@
           <li data-en="Several simultaneous connections" data-es="Varias conexiones simultáneas">Several simultaneous connections</li>
           <li data-en="1 seat transfer / year" data-es="1 transferencia de licencia / año">1 seat transfer / year</li>
         </ul>
-        <a href="https://maemukisoft.com/language/en/contact/" class="plan-cta solid" data-en="Buy Yearly" data-es="Comprar anual" data-es-href="https://maemukisoft.com/language/es/contacto/">Buy Yearly</a>
+        <a href="https://buy.stripe.com/fZudR87qo9rNb5zdvA2sM03" class="plan-cta solid" target="_blank" rel="noopener" data-en="Buy Yearly" data-es="Comprar anual" data-es-href="https://buy.stripe.com/fZudR87qo9rNb5zdvA2sM03">Buy Yearly</a>
       </div>
       <div class="plan reveal" style="transition-delay:.2s">
         <div class="plan-name">Enterprise</div>
@@ -505,8 +524,17 @@
           <li data-en="Several instances simultaneously" data-es="Varias instancias simultáneas">Several instances simultaneously</li>
           <li data-en="Application personalization" data-es="Personalización de la aplicación">Application personalization</li>
         </ul>
-        <a href="https://maemukisoft.com/language/en/contact/" class="plan-cta outline" data-en="Contact us" data-es="Contáctanos" data-es-href="https://maemukisoft.com/language/es/contacto/">Contact us</a>
+        <a href="https://maemukisoft.com/language/en/contact/" class="plan-cta outline" target="_blank" rel="noopener" data-en="Contact us" data-es="Contáctanos" data-es-href="https://maemukisoft.com/language/es/contacto/">Contact us</a>
       </div>
+    </div>
+
+    <!-- Download callout -->
+    <div class="download-bar reveal">
+      <div class="download-bar-text">
+        <span class="download-bar-title" data-en="Already have a license?" data-es="¿Ya tienes una licencia?">Already have a license?</span>
+        <span class="download-bar-sub" data-en="Download Maemuki Bridge for free and activate it with your license key." data-es="Descarga Maemuki Bridge gratis y actívalo con tu clave de licencia.">Download Maemuki Bridge for free and activate it with your license key.</span>
+      </div>
+      <a href="https://github.com/maemukisoft/maemuki-bridge/releases" target="_blank" rel="noopener" class="download-bar-btn" data-en="↓ Download" data-es="↓ Descargar">↓ Download</a>
     </div>
   </div>
 </section>
